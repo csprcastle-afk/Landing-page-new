@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Go Book — Official Updates & Direct WhatsApp Support</title>
+<meta name="description" content="Connect with Go Book directly on WhatsApp for official updates, verified information and fast personal support." />
+<meta name="theme-color" content="#0b1a3a" />
+<meta name="color-scheme" content="dark" />
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Go Book — Official Updates & Direct WhatsApp Support" />
+<meta property="og:description" content="Connect with Go Book directly on WhatsApp for official updates, verified information and fast personal support." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+<script>document.documentElement.classList.add('js');</script>
+
+<style>
+  /* ============================================================
+     TOKENS — brighter, more vibrant palette
+     ============================================================ */
+  :root {
+    --bg:            #0a1730;
+    --bg-2:          #0e2148;
+
+    --surface-top:   rgba(30, 52, 96, .78);
+    --surface-bot:   rgba(14, 30, 66, .82);
+
+    --card-top:      rgba(255, 255, 255, .09);
+    --card-bot:      rgba(255, 255, 255, .035);
+
+    --border:        rgba(255, 255, 255, .14);
+    --border-strong: rgba(46, 224, 138, .55);
+
+    --text:          #f2f7ff;
+    --muted:         #b3c4de;
+    --muted-dim:     #8fa3c2;
+
+    --green:         #22d36b;
+    --teal:          #0aa8a0;
+    --green-soft:    #3df29a;
+    --blue-soft:     #4da6ff;
+    --gold-1:        #ffefb8;
+    --gold-2:        #f0c25a;
+    --gold-3:        #b4821f;
+
+    --radius-shell:  30px;
+    --radius-card:   22px;
+
+    --ease: cubic-bezier(.22, .8, .3, 1);
+  }
+
+  /* ============================================================
+     BASE
+     ============================================================ */
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 18px 14px calc(120px + env(safe-area-inset-bottom));
+    overflow-x: hidden;
+  }
+
+  /* Ambient background — brighter glows */
+  .bg-glow {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(55% 40% at 50% -8%,   rgba(77, 166, 255, .42), transparent 72%),
+      radial-gradient(48% 34% at 98% 14%,   rgba(46, 224, 138, .28), transparent 72%),
+      radial-gradient(60% 40% at 2% 100%,   rgba(70, 130, 240, .30), transparent 74%),
+      radial-gradient(80% 60% at 50% 50%,   rgba(14, 33, 72, .0), transparent 100%),
+      linear-gradient(180deg, #0a1730 0%, #0c1e42 55%, #0a1730 100%);
+  }
+
+  /* ============================================================
+     SHELL
+     ============================================================ */
+  .shell {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 600px;
+    padding: 30px 20px 26px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-shell);
+    background: linear-gradient(180deg, var(--surface-top), var(--surface-bot));
+    box-shadow:
+      0 0 0 1px rgba(77, 166, 255, .10),
+      0 30px 80px -30px rgba(0, 0, 0, .75),
+      0 8px 40px -12px rgba(46, 224, 138, .20),
+      0 2px 0 0 rgba(255, 255, 255, .06) inset;
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+  }
+
+  /* Soft glow accent on top of the shell */
+  .shell::before {
+    content: "";
+    position: absolute;
+    top: -1px;
+    left: 12%;
+    right: 12%;
+    height: 1px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, transparent, rgba(77, 166, 255, .55), rgba(46, 224, 138, .55), transparent);
+    pointer-events: none;
+  }
+
+  /* ============================================================
+     TOP BADGE
+     ============================================================ */
+  .top-row {
+    display: flex;
+    justify-content: center;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: 1px solid rgba(77, 166, 255, .32);
+    background: linear-gradient(180deg, rgba(77, 166, 255, .16), rgba(46, 224, 138, .10));
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: #cfe4ff;
+    white-space: nowrap;
+    box-shadow:
+      0 6px 20px -8px rgba(77, 166, 255, .5),
+      0 1px 0 rgba(255, 255, 255, .10) inset;
+  }
+
+  .badge-dot {
+    position: relative;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--green-soft);
+    box-shadow:
+      0 0 0 3px rgba(46, 224, 138, .18),
+      0 0 12px rgba(46, 224, 138, .9);
+  }
+
+  .badge-dot::after {
+    content: "";
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    border: 1px solid rgba(46, 224, 138, .7);
+    animation: pulse 2.6s var(--ease) infinite;
+  }
+
+  @keyframes pulse {
+    0%   { transform: scale(.7); opacity: .9; }
+    70%  { transform: scale(1.9); opacity: 0; }
+    100% { transform: scale(1.9); opacity: 0; }
+  }
+
+  /* ============================================================
+     BRAND
+     ============================================================ */
+  .brand {
+    text-align: center;
+    margin-top: 22px;
+  }
+
+  .brand h1 {
+    margin: 0;
+    font-size: clamp(2.5rem, 12vw, 3.6rem);
+    font-weight: 800;
+    letter-spacing: -.034em;
+    line-height: 1.04;
+    background: linear-gradient(180deg, #ffffff 0%, #cfe4ff 60%, #7fb3f0 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 4px 30px rgba(77, 166, 255, .25);
+    filter: drop-shadow(0 6px 24px rgba(77, 166, 255, .28));
+  }
+
+  .emblem {
+    position: relative;
+    width: 112px;
+    margin: 20px auto 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  .emblem::before {
+    content: "";
+    position: absolute;
+    inset: -25% -30% -18%;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(240, 194, 90, .30), rgba(240, 194, 90, .06) 60%, transparent 80%);
+    pointer-events: none;
+    filter: blur(4px);
+  }
+
+  .emblem svg {
+    position: relative;
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 8px 24px rgba(240, 194, 90, .38));
+  }
+
+  /* ============================================================
+     INTRO
+     ============================================================ */
+  .intro {
+    max-width: 400px;
+    margin: 22px auto 0;
+    text-align: center;
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--muted);
+    letter-spacing: .002em;
+  }
+
+  /* ============================================================
+     PRIMARY CTA — brighter, more glow
+     ============================================================ */
+  .cta {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 11px;
+    width: 100%;
+    margin-top: 28px;
+    padding: 19px 24px;
+    border: 0;
+    border-radius: 18px;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    color: #04231a;
+    background: linear-gradient(135deg, #37ee86 0%, #19d292 48%, #0fc0ba 100%);
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, .18) inset,
+      0 1px 0 rgba(255, 255, 255, .55) inset,
+      0 18px 40px -12px rgba(31, 220, 138, .75),
+      0 8px 24px -8px rgba(15, 192, 186, .55);
+    transition: transform .22s var(--ease), box-shadow .22s var(--ease), filter .22s var(--ease);
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    overflow: hidden;
+  }
+
+  .cta::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(180deg, rgba(255, 255, 255, .35), transparent 45%);
+    pointer-events: none;
+    opacity: .55;
+  }
+
+  .cta svg {
+    position: relative;
+    z-index: 1;
+    width: 20px;
+    height: 20px;
+    flex: 0 0 auto;
+    stroke-width: 2.2;
+  }
+
+  .cta span { position: relative; z-index: 1; }
+
+  .cta:hover {
+    transform: translateY(-3px);
+    filter: saturate(1.08) brightness(1.03);
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, .24) inset,
+      0 1px 0 rgba(255, 255, 255, .6) inset,
+      0 26px 52px -14px rgba(31, 220, 138, .9),
+      0 12px 30px -10px rgba(15, 192, 186, .7);
+  }
+
+  .cta:active {
+    transform: translateY(-1px) scale(.985);
+  }
+
+  /* ============================================================
+     INFO CARDS — brighter surface + glow on hover
+     ============================================================ */
+  .cards {
+    display: grid;
+    gap: 13px;
+    margin-top: 30px;
+  }
+
+  .card {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 19px 18px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    background: linear-gradient(180deg, var(--card-top), var(--card-bot));
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, .06) inset,
+      0 8px 24px -14px rgba(0, 0, 0, .6);
+    transition: transform .25s var(--ease), border-color .25s var(--ease), background .25s var(--ease), box-shadow .25s var(--ease);
+  }
+
+  .card:hover,
+  .card:focus-within {
+    transform: translateY(-3px);
+    border-color: var(--border-strong);
+    background: linear-gradient(180deg, rgba(46, 224, 138, .14), rgba(77, 166, 255, .06));
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, .10) inset,
+      0 18px 44px -18px rgba(46, 224, 138, .55),
+      0 0 0 1px rgba(46, 224, 138, .18);
+  }
+
+  .card-icon {
+    flex: 0 0 auto;
+    width: 48px;
+    height: 48px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    border: 1px solid rgba(46, 224, 138, .5);
+    background: linear-gradient(145deg, rgba(55, 238, 134, .40), rgba(15, 192, 186, .28));
+    box-shadow:
+      0 6px 20px -8px rgba(31, 220, 138, .9),
+      0 0 0 4px rgba(46, 224, 138, .08),
+      0 1px 0 rgba(255, 255, 255, .25) inset;
+    color: #eafff3;
+  }
+
+  .card-icon svg {
+    width: 22px;
+    height: 22px;
+    stroke-width: 2.2;
+    filter: drop-shadow(0 0 6px rgba(55, 238, 134, .7));
+  }
+
+  .card-body { min-width: 0; }
+
+  .card-body h2 {
+    margin: 3px 0 0;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -.008em;
+    color: #ffffff;
+  }
+
+  .card-body p {
+    margin: 5px 0 0;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--muted);
+  }
+
+  /* ============================================================
+     FOOTER
+     ============================================================ */
+  .footer {
+    margin-top: 32px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, .10);
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px 24px;
+  }
+
+  .footer a {
+    font-size: 12.5px;
+    color: var(--muted-dim);
+    text-decoration: none;
+    letter-spacing: .015em;
+    transition: color .2s var(--ease);
+  }
+
+  .footer a:hover { color: #e0ecff; }
+
+  /* ============================================================
+     FLOATING WHATSAPP BUTTON
+     ============================================================ */
+  .float-wa {
+    position: fixed;
+    right: 18px;
+    bottom: calc(20px + env(safe-area-inset-bottom));
+    z-index: 50;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 18px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-family: inherit;
+    font-size: 13.5px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    color: #04231a;
+    background: linear-gradient(135deg, #37ee86 0%, #19d292 55%, #0fc0ba 100%);
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, .20) inset,
+      0 1px 0 rgba(255, 255, 255, .55) inset,
+      0 16px 40px -10px rgba(31, 220, 138, .85),
+      0 6px 18px -6px rgba(15, 192, 186, .6);
+    transition: transform .22s var(--ease), box-shadow .22s var(--ease), filter .22s var(--ease);
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    animation: floatIn .6s var(--ease) .9s both;
+  }
+
+  @keyframes floatIn {
+    from { opacity: 0; transform: translateY(20px) scale(.9); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  .float-wa svg {
+    width: 22px;
+    height: 22px;
+    flex: 0 0 auto;
+    stroke-width: 2.2;
+  }
+
+  .float-wa::before {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    border-radius: inherit;
+    border: 1px solid rgba(55, 238, 134, .55);
+    animation: floatPulse 2.4s var(--ease) infinite;
+    pointer-events: none;
+  }
+
+  @keyframes floatPulse {
+    0%   { transform: scale(.96); opacity: .9; }
+    70%  { transform: scale(1.14); opacity: 0; }
+    100% { transform: scale(1.14); opacity: 0; }
+  }
+
+  .float-wa:hover {
+    transform: translateY(-3px);
+    filter: saturate(1.08) brightness(1.04);
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, .26) inset,
+      0 1px 0 rgba(255, 255, 255, .6) inset,
+      0 22px 52px -12px rgba(31, 220, 138, .95),
+      0 10px 24px -8px rgba(15, 192, 186, .75);
+  }
+
+  .float-wa:active {
+    transform: translateY(-1px) scale(.97);
+  }
+
+  .float-wa .wa-label {
+    display: none;
+  }
+
+  /* Small screens: icon-only pill */
+  @media (max-width: 360px) {
+    .float-wa { padding: 14px; }
+    .float-wa .wa-label { display: none; }
+  }
+
+  /* Wider screens: show label */
+  @media (min-width: 480px) {
+    .float-wa .wa-label { display: inline; }
+    .float-wa { right: 24px; bottom: calc(24px + env(safe-area-inset-bottom)); padding: 15px 22px; }
+  }
+
+  @media (min-width: 720px) {
+    .float-wa { right: 32px; bottom: calc(32px + env(safe-area-inset-bottom)); }
+  }
+
+  /* ============================================================
+     FOCUS
+     ============================================================ */
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid var(--green-soft);
+    outline-offset: 3px;
+    border-radius: 14px;
+  }
+
+  .float-wa:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 4px;
+    border-radius: 999px;
+  }
+
+  /* ============================================================
+     ENTRANCE ANIMATIONS
+     ============================================================ */
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      opacity: 0;
+      animation: rise .7s var(--ease) forwards;
+      animation-delay: var(--d, 0ms);
+    }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    .js .card {
+      opacity: 0;
+      transform: translateY(14px);
+      transition:
+        opacity .6s var(--ease),
+        transform .6s var(--ease),
+        border-color .25s var(--ease),
+        background .25s var(--ease),
+        box-shadow .25s var(--ease);
+    }
+
+    .js .card.in {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .badge-dot::after,
+    .float-wa::before { animation: none; opacity: 0; }
+    .cta, .card, .footer a, .float-wa { transition: none; }
+    .float-wa { animation: none; }
+  }
+
+  /* ============================================================
+     RESPONSIVE
+     ============================================================ */
+  @media (min-width: 480px) {
+    body { padding: 34px 22px calc(130px + env(safe-area-inset-bottom)); }
+    .shell { padding: 36px 30px 28px; border-radius: 34px; }
+    .cta { padding: 20px 28px; font-size: 14.5px; }
+    .card { padding: 21px 22px; gap: 17px; }
+    .card-body h2 { font-size: 16.5px; }
+    .card-body p { font-size: 14.5px; }
+  }
+
+  @media (min-width: 720px) {
+    body { align-items: center; padding: 48px 24px calc(140px + env(safe-area-inset-bottom)); }
+    .shell { padding: 46px 44px 34px; border-radius: 38px; }
+    .brand { margin-top: 26px; }
+    .emblem { width: 126px; margin-top: 24px; }
+    .intro { font-size: 15.5px; margin-top: 24px; }
+    .cta { margin-top: 32px; border-radius: 20px; }
+    .cards { margin-top: 34px; gap: 15px; }
+    .card { border-radius: 24px; }
+  }
+</style>
+</head>
+
+<body>
+  <div class="bg-glow" aria-hidden="true"></div>
+
+  <main class="shell">
+
+    <!-- 1. TOP BADGE -->
+    <div class="top-row">
+      <span class="badge reveal" style="--d:0ms">
+        <span class="badge-dot" aria-hidden="true"></span>
+        Get in touch
+      </span>
+    </div>
+
+    <!-- 2. BRAND SECTION -->
+    <header class="brand">
+      <h1 class="reveal" style="--d:70ms">Go Book</h1>
+
+      <div class="emblem reveal" style="--d:150ms" aria-hidden="true">
+        <svg viewBox="0 0 140 160" role="presentation" focusable="false">
+          <defs>
+            <linearGradient id="goldStroke" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%"   stop-color="#fff5cf" />
+              <stop offset="42%"  stop-color="#f0c25a" />
+              <stop offset="100%" stop-color="#b4821f" />
+            </linearGradient>
+            <linearGradient id="goldFill" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%"   stop-color="#2c2a18" stop-opacity=".95" />
+              <stop offset="100%" stop-color="#101c3a" stop-opacity=".95" />
+            </linearGradient>
+          </defs>
+
+          <!-- Outer shield -->
+          <path d="M70 8 L126 30 V82 C126 117 101 143 70 153 C39 143 14 117 14 82 V30 Z"
+                fill="url(#goldFill)"
+                stroke="url(#goldStroke)"
+                stroke-width="2.6"
+                stroke-linejoin="round" />
+
+          <!-- Inner hairline -->
+          <path d="M70 23 L113 40 V82 C113 109 94 130 70 140 C46 130 27 109 27 82 V40 Z"
+                fill="none"
+                stroke="url(#goldStroke)"
+                stroke-width="1.1"
+                opacity=".6" />
+
+          <!-- Monogram -->
+          <text x="70" y="84"
+                text-anchor="middle"
+                dominant-baseline="middle"
+                font-family="Georgia, 'Times New Roman', serif"
+                font-size="44"
+                font-weight="700"
+                letter-spacing="1"
+                fill="url(#goldStroke)">GB</text>
+        </svg>
+      </div>
+    </header>
+
+    <!-- 3. INTRODUCTION -->
+    <p class="intro reveal" style="--d:230ms">
+      For more information, updates and more, connect with Go Book directly on WhatsApp.
+    </p>
+
+    <!-- 4. PRIMARY CTA -->
+    <a class="cta reveal"
+       style="--d:310ms"
+       href="https://wa.me/6282218503801"
+       target="_blank"
+       rel="noopener noreferrer"
+       data-whatsapp
+       aria-label="Chat with Go Book on WhatsApp">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+      </svg>
+      <span>Chat on WhatsApp</span>
+    </a>
+
+    <!-- 5. INFORMATION CARDS -->
+    <section class="cards" aria-label="Why connect with Go Book">
+
+      <article class="card">
+        <span class="card-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 6 9 17l-5-5"/>
+          </svg>
+        </span>
+        <div class="card-body">
+          <h2>Official Updates</h2>
+          <p>Stay connected for verified information.</p>
+        </div>
+      </article>
+
+      <article class="card">
+        <span class="card-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-linecap="round" stroke-linejoin="round">
+            <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/>
+          </svg>
+        </span>
+        <div class="card-body">
+          <h2>Fast Response</h2>
+          <p>Get a direct response on WhatsApp.</p>
+        </div>
+      </article>
+
+      <article class="card">
+        <span class="card-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+        </span>
+        <div class="card-body">
+          <h2>Direct Support</h2>
+          <p>Connect with Go Book directly.</p>
+        </div>
+      </article>
+
+    </section>
+
+    <!-- 6. FOOTER -->
+    <footer class="footer">
+      <a href="#privacy">Privacy Policy</a>
+      <a href="#contact">Contact</a>
+      <a href="#terms">Terms</a>
+    </footer>
+
+  </main>
+
+  <!-- FLOATING WHATSAPP BUTTON -->
+  <a class="float-wa"
+     href="https://wa.me/6282218503801"
+     target="_blank"
+     rel="noopener noreferrer"
+     data-whatsapp
+     aria-label="Chat with Go Book on WhatsApp">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+    </svg>
+    <span class="wa-label">Chat Now</span>
+  </a>
+
+  <script>
+    /* ==========================================================
+       ⚙️  CONFIG — change these two values only
+       ========================================================== */
+
+    // WhatsApp number in international format: country code + number,
+    // digits only. No "+", no spaces, no dashes.
+    // Example: Indonesia 822 1850 3801  ->  "6282218503801"
+    const WHATSAPP_NUMBER = "6282218503801";
+
+    // Pre-filled message that opens inside WhatsApp.
+    const WHATSAPP_MESSAGE = "Hello Go Book, I would like to get more information and updates.";
+
+    /* ==========================================================
+       Wiring
+       ========================================================== */
+    (function () {
+      "use strict";
+
+      /* ---- Build the WhatsApp link ---- */
+      const waLink =
+        "https://wa.me/" +
+        String(WHATSAPP_NUMBER).replace(/\D/g, "") +
+        "?text=" + encodeURIComponent(WHATSAPP_MESSAGE);
+
+      document.querySelectorAll("[data-whatsapp]").forEach(function (el) {
+        el.setAttribute("href", waLink);
+      });
+
+      /* ---- Scroll reveal for cards ---- */
+      const cards = document.querySelectorAll(".card");
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      if (reduceMotion || !("IntersectionObserver" in window)) {
+        cards.forEach(function (c) { c.classList.add("in"); });
+        return;
+      }
+
+      const observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry, i) {
+          if (!entry.isIntersecting) return;
+          const el = entry.target;
+          setTimeout(function () { el.classList.add("in"); }, i * 90);
+          observer.unobserve(el);
+        });
+      }, { threshold: 0.15, rootMargin: "0px 0px -40px 0px" });
+
+      cards.forEach(function (c) { observer.observe(c); });
+    })();
+  </script>
+</body>
+</html>
